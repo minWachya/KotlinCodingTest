@@ -1,12 +1,6 @@
 class Solution {
-    fun solution(clothes: Array<Array<String>>): Int {
-        val categories = clothes.map{ it[1] }.toSet()
-            .map{ category -> clothes.count{ it[1] == category } }
-        var answer = 1
-        categories.forEach{
-            answer *= it+1
-        }
-    
-        return answer-1
-    }
+    fun solution(clothes: Array<Array<String>>): Int = clothes
+        .groupBy{ it[1] }
+        .values
+        .fold(1) { acc, arr -> acc*(arr.size+1) } - 1
 }
