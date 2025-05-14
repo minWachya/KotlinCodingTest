@@ -12,14 +12,12 @@ class Solution {
                         done++
                         cur++
                     }
-                    if(temp[i] < 100) break
+                    else if(temp[i] < 100) break
                 }
                 answer += done
             }
             else {
-                (0 until temp.size).forEach{
-                    if(temp[it] < 100) temp[it] += speeds[it]
-                }
+                for(i in cur until temp.size){ temp[i] += speeds[i] }
             }
         }
         
