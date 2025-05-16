@@ -1,24 +1,19 @@
-import kotlin.math.max
-
 class Solution {
-    fun solution(k: Int, dungeons: Array<IntArray>): Int = dfs(dungeons, BooleanArray(dungeons.size){false}, k, 0, 0)
-
-    fun dfs(
-        dungeons: Array<IntArray>,
-        visited: BooleanArray,
-        power: Int,
-        maxCnt: Int,
-        cnt: Int
-    ) : Int {
-        var tempMax = maxCnt
+    fun solution(k: Int, dungeons: Array<IntArray>): Int {
+        var answer = 0
         
-        for(i in dungeons.indices) {
-            if(!visited[i] && power >= dungeons[i][0]){
-                visited[i] = true
-                tempMax = dfs(dungeons, visited, power-dungeons[i][1], tempMax, cnt+1)
-                visited[i] = false
+        for (i in dungeons.indices) {
+            var dungeon = dungeons[i]
+            if (k >= dungeon[0]) {
+                var temp = solution(
+                    k - dungeon[1], 
+                    dungeons.sliceArray(0..i-1) + 
+                        dungeons.sliceArray(i+1..dungeons.lastIndex))
+                if (temp + 1 > answer) answer = temp + 1
+                if (answer == dungeons.count()) return answer
             }
         }
-        return max(tempMax, cnt)
+        
+        return answer
     }
 }
