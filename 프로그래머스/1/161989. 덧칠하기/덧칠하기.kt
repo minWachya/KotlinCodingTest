@@ -3,9 +3,9 @@ class Solution {
         var answer: Int = 0
         
         var paint = 0
-        for(i in section.indices) {
-            if(section[i] > paint) {
-                paint = section[i] + m - 1
+        section.forEach {
+            if(it > paint) {
+                paint = it + m - 1
                 answer++
             }
         }
