@@ -1,22 +1,18 @@
 class Solution {
-    private var answer = 0
-    
+    private val aeiouArr = arrayOf("A", "E", "I", "O", "U")
+    private val result = mutableListOf<String>()
+
     fun solution(word: String): Int {
-        find("", word)
-        return answer
+        dfs("")
+        return result.indexOf(word)
     }
 
-    fun find(s: String, word: String): Boolean {
-        var str = s
-        if(str == word) return true
-        if(str.length >= 5) return false
-
-        for (c in "AEIOU".toCharArray()) {
-            str += c
-            answer++
-            if (find(str, word)) return true
-            str = str.substring(0 until str.length-1)
+    fun dfs(str: String) {
+        if(str.length > 5) return
+        
+        result.add(str)
+        for(item in aeiouArr) {
+            dfs(str + item)
         }
-        return false
     }
 }
