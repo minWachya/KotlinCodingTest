@@ -1,22 +1,14 @@
 class Solution {
     fun solution(s: String, skip: String, index: Int): String {
         var answer: String = ""
+        val skipArr = skip.toCharArray()
+        val alphabetArr = ('a'..'z').filter{ it !in skipArr }
         
         s.forEach{
-            answer += newS(it, skip, index)
+            val i = (alphabetArr.indexOf(it) + index) % alphabetArr.size
+            answer += alphabetArr[i]
         }
         
         return answer
-    }
-    
-    fun newS(s: Char, skip: String, index: Int): Char {
-        var i = 0
-        var newS = s
-        while(i < index) {
-            newS++
-            if(newS.toInt() > 122) newS = 'a' + newS.toInt() - 123
-            if(newS !in skip) i++
-        }
-        return newS
     }
 }
