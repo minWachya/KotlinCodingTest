@@ -1,18 +1,20 @@
 class Solution {
     fun solution(X: String, Y: String): String {
         var answer: String = ""        
-        var xArr = IntArray(10)
-        var yArr = IntArray(10)  
+        var setX = setOf<Char>()
+        var setY = setOf<Char>()
         
-        for (c in X) xArr[c.digitToInt()]++
-        for (c in Y) yArr[c.digitToInt()]++
+        for (c in X) setX += c
+        for (c in Y) setY += c
         
-        for (i in 9 downTo 0) {
-            if (xArr[i] != 0 && yArr[i] != 0) {
-                var min = kotlin.math.min(xArr[i], yArr[i])
-                answer += "$i".repeat(min)
-            }
-        }        
+        val partnerSet = setX.intersect(setY).sortedDescending()
+        partnerSet.forEach{ c ->
+            val countX = X.count{ it == c }
+            val countY = Y.count{ it == c }
+            var min = kotlin.math.min(countX, countY)
+            answer += "$c".repeat(min)
+        }
+      
         if(answer.isEmpty()) return "-1"
         if(answer[0] == '0') return "0"       
         return answer
