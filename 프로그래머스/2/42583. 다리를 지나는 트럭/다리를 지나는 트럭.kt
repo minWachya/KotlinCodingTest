@@ -1,42 +1,22 @@
 import java.util.*
 
 class Solution {
-    fun solution(
-        bridge_length: Int,
-        weight: Int,
-        truck_weights: IntArray)
-    : Int {
+    fun solution(bridge_length: Int, weight: Int, truck_weights: IntArray): Int {
         var answer = 0
-        var moveQueue = LinkedList<Int>()
-        var waitQueue = LinkedList<Int>()
-        truck_weights.forEach { waitQueue.offer(it) }
+        val waitQueue = LinkedList<Int>(truck_weights.toList())
+        val moveQueue = LinkedList<Int>(List(bridge_length) {0})
         
-        val arrivalTruck = mutableListOf<Int>()
-
-        while (arrivalTruck.size != truck_weights.size) {
-            var sum = moveQueue.sum()
-            var peekWeight = waitQueue.peek() ?: 0
-
-            if (moveQueue.size == bridge_length){
-                peekWeight -= moveQueue.peek()
-            }
+        while (moveQueue.isNotEmpty()) {
+            answer++
+            moveQueue.poll()
             
-            if (moveQueue.size <= bridge_length && sum + peekWeight < weight+1) {
-                moveQueue.offer(waitQueue.poll() ?: 0)
-                answer++
-            } else {
-                moveQueue.offer(0)
-                answer++
-            }
-            
-            if (moveQueue.size > bridge_length) {
-                if (moveQueue.peek() == 0) {
-                    moveQueue.poll()
+            if (waitQueue.isNotEmpty()) {
+                if (moveQueue.sum() + waitQueue.peek() <= weight) {
+                    moveQueue.add(waitQueue.poll())
                 } else {
-                    arrivalTruck.add(moveQueue.poll())
+                    moveQueue.add(0)
                 }
             }
-
         }
         return answer
     }
