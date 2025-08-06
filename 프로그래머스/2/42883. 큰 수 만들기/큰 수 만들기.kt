@@ -4,15 +4,14 @@ class Solution {
     fun solution(number: String, k: Int): String {
         var answer = ""
         val stack = Stack<Char>()
-        var restLength = k
+        var rest = k
         
-        for(i in 0 until number.length) {
-            val digit = number[i]
-            while (!stack.isEmpty() && restLength > 0 && stack.peek() < digit) {
+        for(n in number) {
+            while (!stack.isEmpty() && rest > 0 && stack.peek() < n) {
                 stack.pop()
-                restLength--
+                rest--
             }
-            stack.push(digit)
+            stack.push(n)
         }
         
         while(!stack.isEmpty()) {
