@@ -1,7 +1,7 @@
 class Solution {
     
     enum class Move(val x: Int, val y: Int) {
-        BOTTOM(1, 0), RIGHT(0, 1), UP(-1, -1)
+        DOWN(1, 0), RIGHT(0, 1), UP(-1, -1)
     }
     
     fun solution(n: Int): IntArray {
@@ -11,13 +11,13 @@ class Solution {
         var num = 1
         var x = -1
         var y = 0
-        var curMove = Move.BOTTOM
+        var curMove = Move.DOWN
         while(round > 0) {
             when(curMove) {
-                Move.BOTTOM -> {
+                Move.DOWN -> {
                     repeat(round) {
-                        x = x + Move.BOTTOM.x
-                        y = y + Move.BOTTOM.y
+                        x = x + Move.DOWN.x
+                        y = y + Move.DOWN.y
                         answer[x][y] = num++
                     }
                     round--
@@ -39,7 +39,7 @@ class Solution {
                         answer[x][y] = num++
                     }
                     round--
-                    curMove = Move.BOTTOM
+                    curMove = Move.DOWN
                 }
             }
         }
