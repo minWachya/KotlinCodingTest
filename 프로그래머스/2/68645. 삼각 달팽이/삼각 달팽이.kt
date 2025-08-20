@@ -1,33 +1,49 @@
 class Solution {
+    
+    enum class Move(val x: Int, val y: Int) {
+        BOTTOM(1, 0), RIGHT(0, 1), UP(-1, -1)
+    }
+    
     fun solution(n: Int): IntArray {
-        val arr = Array(n){IntArray(n)}
-        val dir = arrayOf(arrayOf(1,0),arrayOf(0,1),arrayOf(-1,-1))
-        var moveMax = n
-        var r=0
-        var c=0
-        var curDir = 0
-        var num=1
-        var moveCnt=0
-        while(moveMax!=0){
-            arr[r][c] = num++
-            moveCnt++
-            if(moveCnt==moveMax){
-                moveMax--
-                moveCnt=0
-                curDir++
+        var answer = Array(n) { Array<Int>(n) { 0 } }
+        
+        var round = n
+        var num = 1
+        var x = -1
+        var y = 0
+        var curMove = Move.BOTTOM
+        while(round > 0) {
+            when(curMove) {
+                Move.BOTTOM -> {
+                    repeat(round) {
+                        x = x + Move.BOTTOM.x
+                        y = y + Move.BOTTOM.y
+                        answer[x][y] = num++
+                    }
+                    round--
+                    curMove = Move.RIGHT
+                }
+                Move.RIGHT -> {
+                    repeat(round) {
+                        x = x + Move.RIGHT.x
+                        y = y + Move.RIGHT.y
+                        answer[x][y] = num++
+                    }
+                    round--
+                    curMove = Move.UP
+                }
+                Move.UP -> {
+                    repeat(round) {
+                        x = x + Move.UP.x
+                        y = y + Move.UP.y
+                        answer[x][y] = num++
+                    }
+                    round--
+                    curMove = Move.BOTTOM
+                }
             }
-            r+= dir[curDir%3][0]
-            c+= dir[curDir%3][1]
         }
         
-        val answer = ArrayList<Int>()
-        
-        for(i in 0 until n){
-            for(j in 0 until n){
-                if(arr[i][j]>0)
-                    answer.add(arr[i][j])
-            }
-        }
-        return answer.toIntArray()
+        return answer.flatten().filter{ it != 0 }.toIntArray()
     }
 }
