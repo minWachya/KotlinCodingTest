@@ -7,7 +7,7 @@ class Solution {
         var sum = sequence[0]
         var max = sequence.size
         
-        while(left < max && right < max) {
+        while(right < max) {
             if(sum < k) {
                 if(right+1 == max) break
                 sum += sequence[++right]
@@ -19,6 +19,7 @@ class Solution {
                 }
                 sum -= sequence[left++]
             }
+            
         }
         
         return answer
